@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="uft-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="neighborhood-map">
+        <meta name="author" content="alye-carlevaro">
+        <title>UDACITY NEIGHBORHOOD MAP PROJECT</title>
+
+        <style type="text/css">
+            html,
+            body {
+                font-family: Arial, sans-serif;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            #map {
+                height: 100%
+            }
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+        <script type="text/javascript">
+            var map;
+            function initMap() {
+            var styles = [
+            {
+                "featureType": "administrative",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#444444"
+                    }
+                ]
+            },
+            {
+                "featureType": "landscape",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "color": "#FDD7CC"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "color": "#9EB366"
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "saturation": -50
+                    },
+                    {
+                        "lightness": 25
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "visibility": "simplified"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.arterial",
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "color": "#46bcec"
+                    },
+                    {
+                        "visibility": "on"
+                    }
+                ]
+            }
+        ];
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center:{lat: 34.6717463, lng: -111.9407988},
+                    zoom: 8,
+                    styles: styles,
+                    mapTypeControl: false
+                });
+                var grandcanyon = {lat: 35.9743629, lng: -112.1267479};
+                var marker = new google.maps.Marker({
+                    position: grandcanyon,
+                    map: map,
+                    title: 'Grand Canyon'
+                });
+                var infowindow = new google.maps.InfoWindow({
+                    content: '40.74135, -74.99802'
+                });
+                marker.addListener('click', function() {
+                    infowindow.open(map, marker);
+                });
+            }
+        </script>
+
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKw5eY-nR_Z5EDjZYwOxCfH6A9s3YW_GM&v=3&callback=initMap">
+
+
+        </script>
+    </body>

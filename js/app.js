@@ -146,30 +146,29 @@ var styles = [
 var map;
 
 var markers=[];
+var largeInfowindow;
 
-function initMap() {
-
-  map = new google.maps.Map(document.getElementById('map'), {
+function createMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
       center:{lat: 35.9743629, lng: -112.1267479},
       zoom: 8,
       styles: styles,
       mapTypeControl: false
   });
+}
 
-  var largeInfowindow = new google.maps.InfoWindow();
+function createInfoWindow() {
+  largeInfowindow = new google.maps.InfoWindow();
+}
 
-   // Style the markers a bit. This will be our listing marker icon.
-  var defaultIcon = makeMarkerIcon('0091ff');
-
-  // Create a "highlighted location" marker color for when the user
-  // mouses over the marker.
-  var highlightedIcon = makeMarkerIcon('29E058');
-
-  // The following group uses the location array to create an array of markers on initialize.
-  for (var i = 0; i < locations.length; i++) {
-    // Get the position from the location array.
-    var position = locations[i].location;
-    var name = locations[i].name;
+function createMarker(location, i) {
+    var position = location.location;
+    var name = location.name;
+    // Style the markers a bit. This will be our listing marker icon.
+    var defaultIcon = makeMarkerIcon('0091ff');
+    // Create a "highlighted location" marker color for when the user
+    // mouses over the marker.
+    var highlightedIcon = makeMarkerIcon('29E058');
     // Create a marker per location, and put into markers array.
     var marker = new google.maps.Marker({
       position: position,
@@ -178,8 +177,6 @@ function initMap() {
       icon: defaultIcon,
       id: i
     });
-    // Push the marker to our array of markers.
-    markers.push(marker);
     // Create an onclick event to open the large infowindow at each marker.
     marker.addListener('click', function() {
       populateInfoWindow(this, largeInfowindow);
@@ -192,11 +189,24 @@ function initMap() {
     marker.addListener('mouseout', function() {
       this.setIcon(defaultIcon);
     });
+
+    return marker;
+}
+
+function initMap() {
+
+  createMap();
+  createInfoWindow();
+
+  // The following group uses the location array to create an array of markers on initialize.
+  for (var i = 0; i < locations.length; i++) {
+    // Get the position from the location array.
+    var marker = createMarker(locations[i], i);
+    // Push the marker to our array of markers.
+    markers.push(marker);
   };
 
   showPlaces();
-
-
 }
 
 function googleError() {
@@ -250,6 +260,10 @@ function populateInfoWindow(marker, infowindow) {
 //View model
 var ViewModel = function() {
   var self = this;
+  var map;
+  var infoWindow;
+  var markers;
+
 
   this.locationList = ko.observableArray([]);
 
@@ -260,8 +274,8 @@ var ViewModel = function() {
   this.currentLocation = ko.observable(this.locationList()[0]);
 
   this.selectLocation = function(locationsItem) {
-    self.populateInfoWindow(self, InfoWindow);
-    };
+    populateInfoWindow(self, largeInfowindow);
+  };
 }
 
 

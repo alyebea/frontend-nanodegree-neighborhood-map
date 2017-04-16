@@ -63,30 +63,26 @@
                     <span class="text">Points of Interest</span>
                 </div>
                 <div>
-                    <select id="Locations">
-                        <option value="0">All</option>
-                        <option value="1">Grand Canyon</option>
-                        <option value="2">Antelope Canyon</option>
-                        <option value="3">Sedona</option>
-                        <option value="4">The Wave</option>
-                        <option value="5">Palatki Caves</option>
-                        <option value="6">Verde Valley</option>
+                    <select id="Locations" data-bind="foreach: locationList">
+                        <option data-bind="text: name"></option>
                     </select>
                 </div>
                 <div>
                     <ul data-bind="foreach: locationList">
-                        <li data-bind="text: name, click: $parent.setLocation"></li>
+                        <li data-bind="text: name, click: $parent.selectLocation"></li>
                     </ul>
                 </div>
             </div>
             <div id="map"></div>
         </div>
 
+        <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKw5eY-nR_Z5EDjZYwOxCfH6A9s3YW_GM&v=3&">
+</script>
+
     <script src="bower_components/knockout/dist/knockout.js"></script>
     <script src="js/app.js"></script>
 
-<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKw5eY-nR_Z5EDjZYwOxCfH6A9s3YW_GM&v=3&callback=initMap">
-</script>
+
 
     </body>

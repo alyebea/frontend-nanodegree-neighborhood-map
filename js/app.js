@@ -142,6 +142,7 @@ var ViewModel = function() {
   var map;
   var largeInfowindow;
   var markers = [];
+  var currentMarker;
 
   // Style the markers a bit. This will be our listing marker icon.
   var defaultIcon = makeMarkerIcon('0091ff');
@@ -208,7 +209,7 @@ var ViewModel = function() {
       });
       // Create an onclick event to open the large infowindow at each marker.
       marker.addListener('click', function() {
-
+        currentMarker = this;
         populateInfoWindow(this, largeInfowindow);
 
       });
@@ -274,15 +275,17 @@ var ViewModel = function() {
   this.currentLocation = ko.observable(this.locationList()[0]);
 
   this.selectLocation = function(locationsItem) {
+    if (currentMarker) {
+      currentMarker.setIcon(defaultIcon);
+    }
     var markerIndex = locationsItem.markerIndex;
     var markerIndexOffset = 1;
     var marker = markers[markerIndex - markerIndexOffset];
-    populateInfoWindow(marker, largeInfowindow);
 
+    populateInfoWindow(marker, largeInfowindow);
+    currentMarker = marker;
 
     marker.setIcon(highlightedIcon);
-    console.log("clicked");
-    console.log(marker);
   };
 
   initMap();

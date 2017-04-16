@@ -297,5 +297,7 @@ var Location = function(data) {
     this.markerIndex = data.value;
 }
 
-ko.applyBindings(new ViewModel())
+function initApp() {
+  ko.applyBindings(new ViewModel());
+}
 

@@ -56,19 +56,11 @@ var locations = [
 var styles = [
 {
   elementType: 'geometry',
-  stylers: [
-    {
-      color: '#FDF3DC'
-    }
-  ]
+  stylers: [{color: '#FDF3DC'}]
 },
 {
   elementType: 'labels.text.stroke',
-  stylers: [
-    {
-      color: '#742D34'
-    }
-  ]
+  stylers: [{color: '#742D34'}]
 },
 {
   elementType: 'labels.text.fill',
@@ -151,6 +143,11 @@ var ViewModel = function() {
   var largeInfowindow;
   var markers = [];
 
+  // Style the markers a bit. This will be our listing marker icon.
+  var defaultIcon = makeMarkerIcon('0091ff');
+  // Create a "highlighted location" marker color for when the user
+  // mouses over the marker.
+  var highlightedIcon = makeMarkerIcon('29E058');
   /**
    *
    */
@@ -200,11 +197,7 @@ var ViewModel = function() {
   function createMarker(location, i) {
       var position = location.location;
       var name = location.name;
-      // Style the markers a bit. This will be our listing marker icon.
-      var defaultIcon = makeMarkerIcon('0091ff');
-      // Create a "highlighted location" marker color for when the user
-      // mouses over the marker.
-      var highlightedIcon = makeMarkerIcon('29E058');
+
       // Create a marker per location, and put into markers array.
       var marker = new google.maps.Marker({
         position: position,
@@ -215,7 +208,9 @@ var ViewModel = function() {
       });
       // Create an onclick event to open the large infowindow at each marker.
       marker.addListener('click', function() {
+
         populateInfoWindow(this, largeInfowindow);
+
       });
       // Two event listeners - one for mouseover, one for mouseout,
       // to change the colors back and forth.
@@ -279,9 +274,15 @@ var ViewModel = function() {
   this.currentLocation = ko.observable(this.locationList()[0]);
 
   this.selectLocation = function(locationsItem) {
-    // populateInfoWindow(self, largeInfowindow);
+    var markerIndex = locationsItem.markerIndex;
+    var markerIndexOffset = 1;
+    var marker = markers[markerIndex - markerIndexOffset];
+    populateInfoWindow(marker, largeInfowindow);
+
+
+    marker.setIcon(highlightedIcon);
     console.log("clicked");
-    console.log(markers);
+    console.log(marker);
   };
 
   initMap();

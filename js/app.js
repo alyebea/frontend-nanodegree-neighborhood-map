@@ -274,6 +274,7 @@ var ViewModel = function() {
 
   this.currentLocation = ko.observable(this.locationList()[0]);
 
+
   this.selectLocation = function(locationsItem) {
     if (currentMarker) {
       currentMarker.setIcon(defaultIcon);
@@ -288,6 +289,7 @@ var ViewModel = function() {
     marker.setIcon(highlightedIcon);
   };
 
+
   initMap();
 }
 
@@ -295,6 +297,10 @@ var ViewModel = function() {
 var Location = function(data) {
     this.name = ko.observable(data.name);
     this.markerIndex = data.value;
+}
+
+function gmapsError() {
+    alert("Google Maps has failed to load. Please check your internet connection and try again.");
 }
 
 function initApp() {

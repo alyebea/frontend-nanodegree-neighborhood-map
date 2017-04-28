@@ -7,7 +7,7 @@
         <meta name="author" content="alye-carlevaro">
         <title>UDACITY NEIGHBORHOOD MAP PROJECT</title>
 
-        <style type="text/css">
+        <style>
           html,
           body {
             font-family: Arial, sans-serif;
@@ -18,15 +18,13 @@
           .container {
             height: 100%;
             position: relative;
-          }
-          input {
-            font-size: 12px;
+            display: flex;
           }
           h1 {
             color: #525454;
             font-size: 22px;
             margin: 0 0 10px 0;
-            text-align: center;
+            text-align: left;
           }
           hr {
             background: #D0D7D9;
@@ -51,20 +49,62 @@
             text-align: left;
             width: 340px;
           }
+          .hamburger {
+            background:none;
+            position: relative;
+            float: right;
+            top:0;
+            right:0;
+            line-height:45px;
+            padding:5px 15px 0px 15px;
+            color:#999;
+            border:0;
+            font-size:1.4em;
+            font-weight:bold;
+            cursor:pointer;
+            outline:none;
+            z-index:10000000000000;
+          }
+
+          .cross{
+            background:none;
+            position:absolute;
+            top:0px;
+            right:0;
+            padding:7px 15px 0px 15px;
+            color:#999;
+            border:0;
+            font-size:3em;
+            line-height:65px;
+            font-weight:bold;
+            cursor:pointer;
+            outline:none;
+            z-index:10000000000000;
+            }
+           @media only screen and (max-width: 480px) {
+            body { font-size: 12px;}
+            h1 { font-size: 14px;}
+      }
         </style>
     </head>
 
     <body>
         <div class="container">
             <div class="options-box">
-                <h1>My Neighborhood Map</h1>
+                <span>
+                    <h1>My Neighborhood Map</h1>
+                    <button class="hamburger">&#9776;</button>
+                    <button class="cross">&#735;</button>
+                </span>
                 <hr>
                 <div>
                     <span class="text">Points of Interest</span>
                 </div>
                 <div>
-                    <select data-bind="foreach: locationList">
-                        <option data-bind="text: name"></option>
+                    <select data-bind="options: locationList,
+                                       optionsText: 'name',
+                                       selectedOption: currentLocation,
+                                       optionsCaption: 'Choose...'">
                     </select>
                 </div>
                 <div>
@@ -82,7 +122,7 @@
 
 
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKw5eY-nR_Z5EDjZYwOxCfH6A9s3YW_GM&v=3&callback=initApp">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKw5eY-nR_Z5EDjZYwOxCfH6A9s3YW_GM&v=3&callback=initApp" onerror="gmapsError()">
     </script>
 
 

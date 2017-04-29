@@ -1,19 +1,5 @@
-// var wikiUrl = "http://en.wikipedia.org/w/api.php?action=opensearch&search=" + location.name + "&format=json&callback=wikiCallback";
-// function wikipedia() {
-//   url: wikiUrl,
-//   dataType: "jsonp",
 
-//   success: function( response ) {
-//     var articleList = response[1];
-
-//     for (var i=0; i < articleList.length; i++) {
-//       articleStr = articleList[i];
-//       var url = "http://en.wikipedia.org/wiki/" + articleStr;
-//       $wikiElem.append('<li><a href="'+ url + '">' + articleStr + '</a></li>');
-//     };
-//   }
-// }
-
+"use strict";
 
 //Model
 var locations = [
@@ -246,6 +232,16 @@ var ViewModel = function() {
     largeInfowindow = new google.maps.InfoWindow();
   }
 
+  function flickr() {
+      for (var i = 0; i < locations.length; i++) {
+      // Get the position from the location array.
+      var latlong = (locations[i], i);
+      // Push the marker to our array of markers.
+      var flickrAPI = "https://api.flickr.com/services/rest/?method=flickr.places.findByLatLon=" + latlong + "&api_key=8a6534b1aada1cc326cce22ece45b12f&secret=77c17bd4a3aafa95"
+    };
+    return flickrAPI;
+  }
+
   /**
    *
    */
@@ -261,7 +257,7 @@ var ViewModel = function() {
     }
 
     infowindow.open(map, marker);
-    infowindow.setContent('<div>' + marker.name + '</div>');
+    infowindow.setContent('<div>' + marker.name + flickrAPI + '</div>');
   }
 
 
@@ -274,6 +270,7 @@ var ViewModel = function() {
 
   this.currentLocation = ko.observable(this.locationList()[0]);
 
+  currentLocation: ko.observableArray();
 
   this.selectLocation = function(locationsItem) {
     if (currentMarker) {
@@ -293,14 +290,9 @@ var ViewModel = function() {
   initMap();
 }
 
-
 var Location = function(data) {
     this.name = ko.observable(data.name);
     this.markerIndex = data.value;
-}
-
-function gmapsError() {
-    alert("Google Maps has failed to load. Please check your internet connection and try again.");
 }
 
 function initApp() {

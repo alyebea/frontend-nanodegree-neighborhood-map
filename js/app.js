@@ -3,42 +3,42 @@
 
 //Model
 var locations = [
-      {
-        name: 'Grand Canyon',
-        location: {lat: 35.9743629, lng: -112.1267479},
-        value: 1,
-        category: 'Canyon'
-      },
-      {
-        name: 'Antelope Canyon',
-        location: {lat: 36.952766, lng: -111.4412668},
-        value: 2,
-        category: 'Canyon'
-      },
-      {
-        name: 'Sedona',
-        location: {lat: 34.86, lng: -111.789167},
-        value: 3,
-        category: 'Attraction'
-      },
-      {
-        name: 'The Wave',
-        location: {lat: 36.996067, lng: -112.006083},
-        value: 4,
-        category: 'Attraction'
-      },
-      {
-        name: 'Palatki Cave Dwellings',
-        location: {lat: 34.9156, lng: -111.9022},
-        value: 5,
-        category: 'Attraction'
-      },
-      {
-        name: 'Verde Valley Camp',
-        location: {lat: 34.6717463, lng: -111.9407988},
-        value: 6,
-        category: 'Camp'
-      }
+    {
+      name: 'Grand Canyon',
+      location: {lat: 35.9743629, lng: -112.1267479},
+      value: 1,
+      category: 'Canyon'
+    },
+    {
+      name: 'Antelope Canyon',
+      location: {lat: 36.952766, lng: -111.4412668},
+      value: 2,
+      category: 'Canyon'
+    },
+    {
+      name: 'Sedona',
+      location: {lat: 34.86, lng: -111.789167},
+      value: 3,
+      category: 'Attraction'
+    },
+    {
+      name: 'The Wave',
+      location: {lat: 36.996067, lng: -112.006083},
+      value: 4,
+      category: 'Attraction'
+    },
+    {
+      name: 'Palatki Cave Dwellings',
+      location: {lat: 34.9156, lng: -111.9022},
+      value: 5,
+      category: 'Attraction'
+    },
+    {
+      name: 'Verde Valley Camp',
+      location: {lat: 34.6717463, lng: -111.9407988},
+      value: 6,
+      category: 'Camp'
+    }
   ];
 
 
@@ -46,82 +46,82 @@ var locations = [
 
 /** Styles the map **/
 var styles = [
-{
-  elementType: 'geometry',
-  stylers: [{color: '#FDF3DC'}]
-},
-{
-  elementType: 'labels.text.stroke',
-  stylers: [{color: '#742D34'}]
-},
-{
-  elementType: 'labels.text.fill',
-  stylers: [{color: '#FFEAC0'}]},
-{
-  featureType: 'administrative.locality',
-  elementType: 'labels.text.fill',
-  stylers: [{color: '#FFEAC0'}]
-},
-{
-  featureType: 'poi.park',
-  elementType: 'geometry',
-  stylers: [{color: '#DE5F4E'}]
-},
-{
-  featureType: 'poi.park',
-  elementType: 'labels.text.fill',
-  stylers: [{color: '#A8F3BA'}]
-},
-{
-  featureType: 'poi.park',
-  elementType: 'labels.text.stroke',
-  stylers: [{color: '#5D2A23'}]
-},
-{
-  featureType: 'road',
-  elementType: 'geometry',
-  stylers: [{color: '#F6FEDD'}]
-},
-{
-  featureType: 'road',
-  elementType: 'geometry.stroke',
-  stylers: [{color: '#EEFFEF'}]
-},
-{
-  featureType: 'road',
-  elementType: 'labels.text.fill',
-  stylers: [{color: '#9ca5b3'}]
-},
-{
-  featureType: 'road.highway',
-  elementType: 'geometry',
-  stylers: [{color: '#FFE8BE'}]
-},
-{
-  featureType: 'road.highway',
-  elementType: 'geometry.stroke',
-  stylers: [{color: '#9B201B'}]
-},
-{
-  featureType: 'road.highway',
-  elementType: 'labels.text.fill',
-  stylers: [{color: '#f3d19c'}]
-},
-{
-  featureType: 'water',
-  elementType: 'geometry',
-  stylers: [{color: '#7EC5D3'}]
-},
-{
-  featureType: 'water',
-  elementType: 'labels.text.fill',
-  stylers: [{color: '#515c6d'}]
-},
-{
-  featureType: 'water',
-  elementType: 'labels.text.stroke',
-  stylers: [{color: '#17263c'}]
-}
+    {
+      elementType: 'geometry',
+      stylers: [{color: '#FDF3DC'}]
+    },
+    {
+      elementType: 'labels.text.stroke',
+      stylers: [{color: '#742D34'}]
+    },
+    {
+      elementType: 'labels.text.fill',
+      stylers: [{color: '#FFEAC0'}]},
+    {
+      featureType: 'administrative.locality',
+      elementType: 'labels.text.fill',
+      stylers: [{color: '#FFEAC0'}]
+    },
+    {
+      featureType: 'poi.park',
+      elementType: 'geometry',
+      stylers: [{color: '#DE5F4E'}]
+    },
+    {
+      featureType: 'poi.park',
+      elementType: 'labels.text.fill',
+      stylers: [{color: '#A8F3BA'}]
+    },
+    {
+      featureType: 'poi.park',
+      elementType: 'labels.text.stroke',
+      stylers: [{color: '#5D2A23'}]
+    },
+    {
+      featureType: 'road',
+      elementType: 'geometry',
+      stylers: [{color: '#F6FEDD'}]
+    },
+    {
+      featureType: 'road',
+      elementType: 'geometry.stroke',
+      stylers: [{color: '#EEFFEF'}]
+    },
+    {
+      featureType: 'road',
+      elementType: 'labels.text.fill',
+      stylers: [{color: '#9ca5b3'}]
+    },
+    {
+      featureType: 'road.highway',
+      elementType: 'geometry',
+      stylers: [{color: '#FFE8BE'}]
+    },
+    {
+      featureType: 'road.highway',
+      elementType: 'geometry.stroke',
+      stylers: [{color: '#9B201B'}]
+    },
+    {
+      featureType: 'road.highway',
+      elementType: 'labels.text.fill',
+      stylers: [{color: '#f3d19c'}]
+    },
+    {
+      featureType: 'water',
+      elementType: 'geometry',
+      stylers: [{color: '#7EC5D3'}]
+    },
+    {
+      featureType: 'water',
+      elementType: 'labels.text.fill',
+      stylers: [{color: '#515c6d'}]
+    },
+    {
+      featureType: 'water',
+      elementType: 'labels.text.stroke',
+      stylers: [{color: '#17263c'}]
+    }
 ];
 
 
@@ -135,6 +135,8 @@ var ViewModel = function() {
   var largeInfowindow;
   var markers = [];
   var currentMarker;
+
+
 
   // Style the markers a bit. This will be our listing marker icon.
   var defaultIcon = makeMarkerIcon('0091ff');
@@ -282,6 +284,9 @@ var ViewModel = function() {
 
   currentLocation: ko.observableArray();
 
+  this.categories = ["All", "Attraction", "Camp", "Canyon"];
+  this.selectedCategory = ko.observable(this.categories[0]);
+
 
   //Connects sidebar locations to markers on map
   this.selectLocation = function(locationsItem) {
@@ -299,19 +304,19 @@ var ViewModel = function() {
   };
 
 
-
   initMap();
 }
+
 
 var Location = function(data) {
     this.name = ko.observable(data.name);
     this.markerIndex = data.value;
-    this.categories = ["All", "Attraction", "Camp", "Canyon"];
-    this.selectedCategory = ko.observable(this.categories[0]);
+    this.category = ko.observable(data.category);
 }
 
 
 function initApp() {
   ko.applyBindings(new ViewModel());
 }
+
 

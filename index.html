@@ -50,41 +50,42 @@
             width: 340px;
           }
           .hamburger {
-            background:none;
+            background: none;
             position: relative;
             float: right;
-            top:0;
-            right:0;
-            line-height:45px;
-            padding:5px 15px 0px 15px;
-            color:#999;
-            border:0;
-            font-size:1.4em;
-            font-weight:bold;
-            cursor:pointer;
-            outline:none;
-            z-index:10000000000000;
+            top: 0;
+            right: 0;
+            line-height: 45px;
+            padding: 5px 15px 0px 15px;
+            color: #999;
+            border: 0;
+            font-size: 1.4em;
+            font-weight: bold;
+            cursor: pointer;
+            outline: none;
+            z-index: 10000000000000;
           }
 
           .cross{
-            background:none;
-            position:absolute;
-            top:0px;
-            right:0;
-            padding:7px 15px 0px 15px;
-            color:#999;
-            border:0;
-            font-size:3em;
-            line-height:65px;
-            font-weight:bold;
-            cursor:pointer;
-            outline:none;
-            z-index:10000000000000;
+            background: none;
+            position: absolute;
+            top: 0px;
+            right: 0;
+            padding: 7px 15px 0px 15px;
+            color: #999;
+            border: 0;
+            font-size: 3em;
+            line-height: 65px;
+            font-weight: bold;
+            cursor: pointer;
+            outline: none;
+            z-index: 10000000000000;
             }
+
            @media only screen and (max-width: 480px) {
             body { font-size: 12px;}
             h1 { font-size: 14px;}
-      }
+            }
         </style>
     </head>
 
@@ -101,7 +102,7 @@
                     <span class="text">Points of Interest</span>
                 </div>
                 <div>
-                    <select data-bind="options: categories, selectedOption: selectedCategory, value: selectedCategory, optionsCaption: 'Choose...'">
+                    <select data-bind="options: categories, selectedOption: selectedCategory, value: selectedCategory">
                     </select>
                 </div>
                 <div>

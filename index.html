@@ -101,15 +101,12 @@
                     <span class="text">Points of Interest</span>
                 </div>
                 <div>
-                    <select data-bind="options: locationList,
-                                       optionsText: 'name',
-                                       selectedOption: currentLocation,
-                                       optionsCaption: 'Choose...'">
+                    <select data-bind="options: categories, selectedOption: selectedCategory, value: selectedCategory, optionsCaption: 'Choose...'">
                     </select>
                 </div>
                 <div>
                     <ul data-bind="foreach: locationList">
-                        <li data-bind="text: name, click: $parent.selectLocation"></li>
+                        <li data-bind="text: name, visible: $parent.selectedCategory() === category() || $root.selectedCategory() === 'All', click: $parent.selectLocation"></li>
                     </ul>
                 </div>
             </div>

@@ -6,39 +6,45 @@ var locations = [
       {
         name: 'Grand Canyon',
         location: {lat: 35.9743629, lng: -112.1267479},
-        value: 1
+        value: 1,
+        category: 'Canyon'
       },
       {
         name: 'Antelope Canyon',
         location: {lat: 36.952766, lng: -111.4412668},
-        value: 2
+        value: 2,
+        category: 'Canyon'
       },
       {
         name: 'Sedona',
         location: {lat: 34.86, lng: -111.789167},
-        value: 3
+        value: 3,
+        category: 'Attraction'
       },
       {
         name: 'The Wave',
         location: {lat: 36.996067, lng: -112.006083},
-        value: 4
+        value: 4,
+        category: 'Attraction'
       },
       {
         name: 'Palatki Cave Dwellings',
         location: {lat: 34.9156, lng: -111.9022},
-        value: 5
+        value: 5,
+        category: 'Attraction'
       },
       {
         name: 'Verde Valley Camp',
         location: {lat: 34.6717463, lng: -111.9407988},
-        value: 6
+        value: 6,
+        category: 'Camp'
       }
   ];
 
 
 
 
-
+/** Styles the map **/
 var styles = [
 {
   elementType: 'geometry',
@@ -67,9 +73,9 @@ var styles = [
   stylers: [{color: '#A8F3BA'}]
 },
 {
-    featureType: 'poi.park',
-    elementType: 'labels.text.stroke',
-    stylers: [{color: '#5D2A23'}]
+  featureType: 'poi.park',
+  elementType: 'labels.text.stroke',
+  stylers: [{color: '#5D2A23'}]
 },
 {
   featureType: 'road',
@@ -152,7 +158,7 @@ var ViewModel = function() {
    */
   function showPlaces() {
       var bounds = new google.maps.LatLngBounds();
-      // Extend the boundaries of the map for each marker and display the marker
+      // Extend the boundaries of the map for each marker and displays the marker
       for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(map);
         bounds.extend(markers[i].position);
@@ -232,15 +238,19 @@ var ViewModel = function() {
     largeInfowindow = new google.maps.InfoWindow();
   }
 
-  function flickr() {
-      for (var i = 0; i < locations.length; i++) {
-      // Get the position from the location array.
-      var latlong = (locations[i], i);
-      // Push the marker to our array of markers.
-      var flickrAPI = "https://api.flickr.com/services/rest/?method=flickr.places.findByLatLon=" + latlong + "&api_key=8a6534b1aada1cc326cce22ece45b12f&secret=77c17bd4a3aafa95"
-    };
-    return flickrAPI;
-  }
+  /**
+  Pulls in flickr content according to location
+  **/
+  // function flickr() {
+  //     // Get the position from the location array.
+  //     var latlong = (locations[i], i);
+
+  //     for (var i = 0; i < locations.length; i++) {
+
+  //     var flickrAPI = "https://api.flickr.com/services/rest/?method=flickr.places.findByLatLon=" + latlong + "&api_key=8a6534b1aada1cc326cce22ece45b12f&secret=77c17bd4a3aafa95"
+  //   };
+  //   return flickrAPI;
+  // }
 
   /**
    *
@@ -257,7 +267,7 @@ var ViewModel = function() {
     }
 
     infowindow.open(map, marker);
-    infowindow.setContent('<div>' + marker.name + flickrAPI + '</div>');
+    infowindow.setContent('<div>' + marker.name + '</div>');
   }
 
 
@@ -272,6 +282,8 @@ var ViewModel = function() {
 
   currentLocation: ko.observableArray();
 
+
+  //Connects sidebar locations to markers on map
   this.selectLocation = function(locationsItem) {
     if (currentMarker) {
       currentMarker.setIcon(defaultIcon);
@@ -287,13 +299,17 @@ var ViewModel = function() {
   };
 
 
+
   initMap();
 }
 
 var Location = function(data) {
     this.name = ko.observable(data.name);
     this.markerIndex = data.value;
+    this.categories = ["All", "Attraction", "Camp", "Canyon"];
+    this.selectedCategory = ko.observable(this.categories[0]);
 }
+
 
 function initApp() {
   ko.applyBindings(new ViewModel());

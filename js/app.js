@@ -4,40 +4,82 @@
 //Model
 var locations = [
     {
-      name: 'Grand Canyon',
-      location: {lat: 35.9743629, lng: -112.1267479},
+      name: 'Rockland Bakery',
+      location: {lat: 41.100032, lng: -73.999976},
       value: 1,
-      category: 'Canyon'
+      category: 'Food'
     },
     {
-      name: 'Antelope Canyon',
-      location: {lat: 36.952766, lng: -111.4412668},
+      name: 'Patisserie Didier Dumas',
+      location: {lat: 41.091596, lng: -73.922681},
       value: 2,
-      category: 'Canyon'
+      category: 'Food'
     },
     {
-      name: 'Sedona',
-      location: {lat: 34.86, lng: -111.789167},
+      name: 'Posa Posa',
+      location: {lat: 41.091472, lng: -74.003912},
       value: 3,
-      category: 'Attraction'
+      category: 'Food'
     },
     {
-      name: 'The Wave',
-      location: {lat: 36.996067, lng: -112.006083},
+      name: 'Peekskill Brewery',
+      location: {lat: 41.286954, lng: -73.928955},
       value: 4,
-      category: 'Attraction'
+      category: 'Shopping'
     },
     {
-      name: 'Palatki Cave Dwellings',
-      location: {lat: 34.9156, lng: -111.9022},
+      name: 'Jean-Jaques Culinary Creations',
+      location: {lat: 41.132992, lng: -73.792726},
       value: 5,
-      category: 'Attraction'
+      category: 'Food'
     },
     {
-      name: 'Verde Valley Camp',
-      location: {lat: 34.6717463, lng: -111.9407988},
+      name: 'Le Bouchon',
+      location: {lat: 41.417913, lng: -73.958186},
       value: 6,
-      category: 'Camp'
+      category: 'Shopping'
+    },
+    {
+      name: 'Palisades Mall',
+      location: {lat: 41.098037, lng: -73.956764},
+      value: 7,
+      category: 'Shopping'
+    },
+    {
+      name: 'The Shops at Nanuet',
+      location: {lat: 41.095844, lng: -74.015929},
+      value: 8,
+      category: 'Shopping'
+    },
+    {
+      name: 'The Westchester',
+      location: {lat: 41.031515, lng: -73.758551},
+      value: 9,
+      category: 'Shopping'
+    },
+    {
+      name: 'Veterans Memorial Park',
+      location: {lat: 41.090476, lng: -73.919462},
+      value: 10,
+      category: 'Outdoor Activities'
+    },
+    {
+      name: 'Bear Mountain State Park',
+      location: {lat: 41.311888, lng: -73.988696},
+      value: 11,
+      category: 'Outdoor Activities'
+    },
+    {
+      name: 'The Haverstraw Marina',
+      location: {lat: 41.216742, lng: -73.967936},
+      value: 12,
+      category: 'Outdoor Activities'
+    },
+    {
+      name: 'Rockland Lake',
+      location: {lat: 41.164732, lng: -73.931705},
+      value: 13,
+      category: 'Outdoor Activities'
     }
   ];
 
@@ -48,7 +90,7 @@ var locations = [
 var styles = [
     {
       elementType: 'geometry',
-      stylers: [{color: '#FDF3DC'}]
+      stylers: [{color: '#FFF3EA'}]
     },
     {
       elementType: 'labels.text.stroke',
@@ -65,7 +107,7 @@ var styles = [
     {
       featureType: 'poi.park',
       elementType: 'geometry',
-      stylers: [{color: '#DE5F4E'}]
+      stylers: [{color: '#579C47'}]
     },
     {
       featureType: 'poi.park',
@@ -80,7 +122,7 @@ var styles = [
     {
       featureType: 'road',
       elementType: 'geometry',
-      stylers: [{color: '#F6FEDD'}]
+      stylers: [{color: '#E3E2D6'}]
     },
     {
       featureType: 'road',
@@ -95,17 +137,12 @@ var styles = [
     {
       featureType: 'road.highway',
       elementType: 'geometry',
-      stylers: [{color: '#FFE8BE'}]
-    },
-    {
-      featureType: 'road.highway',
-      elementType: 'geometry.stroke',
-      stylers: [{color: '#9B201B'}]
+      stylers: [{color: '#DCD7D5'}]
     },
     {
       featureType: 'road.highway',
       elementType: 'labels.text.fill',
-      stylers: [{color: '#f3d19c'}]
+      stylers: [{color: '#C3C5C1'}]
     },
     {
       featureType: 'water',
@@ -137,7 +174,6 @@ var ViewModel = function() {
   var currentMarker;
 
 
-
   // Style the markers a bit. This will be our listing marker icon.
   var defaultIcon = makeMarkerIcon('0091ff');
   // Create a "highlighted location" marker color for when the user
@@ -148,8 +184,8 @@ var ViewModel = function() {
    */
   function createMap() {
       map = new google.maps.Map(document.getElementById('map'), {
-        center:{lat: 35.9743629, lng: -112.1267479},
-        zoom: 8,
+        center:{lat: 41.216742, lng: -73.967936},
+        zoom: 3,
         styles: styles,
         mapTypeControl: false
     });
@@ -192,6 +228,7 @@ var ViewModel = function() {
   function createMarker(location, i) {
       var position = location.location;
       var name = location.name;
+      var category = location.category;
 
       // Create a marker per location, and put into markers array.
       var marker = new google.maps.Marker({
@@ -273,21 +310,6 @@ var ViewModel = function() {
   }
 
 
-  // Initialization
-  this.locationList = ko.observableArray([]);
-
-  locations.forEach(function(locationsItem) {
-    self.locationList.push( new Location(locationsItem) );
-  });
-
-  this.currentLocation = ko.observable(this.locationList()[0]);
-
-  currentLocation: ko.observableArray();
-
-  this.categories = ["All", "Attraction", "Camp", "Canyon"];
-  this.selectedCategory = ko.observable(this.categories[0]);
-
-
   //Connects sidebar locations to markers on map
   this.selectLocation = function(locationsItem) {
     if (currentMarker) {
@@ -304,15 +326,49 @@ var ViewModel = function() {
   };
 
 
-  initMap();
-}
+  // var filterMarkers = function(locationsItem) {
+  //   for (i = 0; i < markers.length; i++) {
+
+  //       // If is same category or category not picked
+  //       if (marker.category == category || category.length === 0) {
+  //           marker.setVisible(true);
+  //       }
+  //       // Categories don't match
+  //       else {
+  //           marker.setVisible(false);
+  //       }
+  //     }
+  // };
 
 
-var Location = function(data) {
+
+//Location data
+  var Location = function(data) {
     this.name = ko.observable(data.name);
     this.markerIndex = data.value;
     this.category = ko.observable(data.category);
 }
+
+
+
+  // Initialization
+  this.locationList = ko.observableArray([]);
+
+  locations.forEach(function(locationsItem) {
+    self.locationList.push( new Location(locationsItem) );
+  });
+
+  this.currentLocation = ko.observable(this.locationList()[0]);
+
+  // this.currentLocation = ko.observableArray([]);
+
+  this.categories = ["All", "Food", "Shopping", "Outdoor Activities"];
+  this.selectedCategory = ko.observable(this.categories[0]);
+
+
+  initMap();
+}
+
 
 
 function initApp() {

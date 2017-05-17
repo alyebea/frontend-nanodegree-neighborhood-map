@@ -93,7 +93,7 @@
         <div class="container">
             <div class="options-box">
                 <span>
-                    <h1>My Neighborhood Map</h1>
+                    <h1>Hudson Valley Places</h1>
                     <button class="hamburger">&#9776;</button>
                     <button class="cross">&#735;</button>
                 </span>
@@ -107,13 +107,14 @@
                 </div>
                 <div>
                     <ul data-bind="foreach: locationList">
-                        <li data-bind="text: name, visible: $parent.selectedCategory() === category() || $root.selectedCategory() === 'All', click: $parent.selectLocation"></li>
+                        <li data-bind="text: name, visible: $parent.selectedCategory() === category() || $root.selectedCategory() === 'All', click: $parent.selectLocation, visible: selectedCategory() === marker.category"></li>
                     </ul>
                 </div>
             </div>
             <div id="map"></div>
         </div>
 
+<!-- visible: $parent.selectedCategory() === category() || $root.selectedCategory() === 'All', visible: $parent.filterMarkers() === category(), -->
 
     <script src="bower_components/knockout/dist/knockout.js"></script>
     <script src="js/jquery-3.2.1.js"></script>

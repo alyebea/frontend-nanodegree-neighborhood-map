@@ -28,7 +28,7 @@ var locations = [
       category: 'Shopping'
     },
     {
-      name: 'Jean-Jaques Culinary Creations',
+      name: 'Jean-Jaques',
       location: {lat: 41.132992, lng: -73.792726},
       value: 5,
       category: 'Food'
@@ -280,16 +280,16 @@ var ViewModel = function() {
   /**
   Pulls in flickr content according to location
   **/
-  // function flickr() {
-  //     // Get the position from the location array.
-  //     var latlong = (locations[i], i);
+  function fourSquare() {
+      // Get the position from the location array.
+      var venue = (locations[i], i);
 
-  //     for (var i = 0; i < locations.length; i++) {
+      for (var i = 0; i < locations.length; i++) {
 
-  //     var flickrAPI = "https://api.flickr.com/services/rest/?method=flickr.places.findByLatLon=" + latlong + "&api_key=8a6534b1aada1cc326cce22ece45b12f&secret=77c17bd4a3aafa95"
-  //   };
-  //   return flickrAPI;
-  // }
+      var fourSquareVenue = "https://api.foursquare.com/v2/venues/" + location.venue + "/photos"
+    };
+    return fourSquareVenue;
+  }
 
   /**
    *
@@ -326,19 +326,19 @@ var ViewModel = function() {
   };
 
 
-  // var filterMarkers = function(locationsItem) {
-  //   for (i = 0; i < markers.length; i++) {
+  var filterMarkers = function(category) {
+    for (i = 0; i < markers.length; i++) {
 
-  //       // If is same category or category not picked
-  //       if (marker.category == category || category.length === 0) {
-  //           marker.setVisible(true);
-  //       }
-  //       // Categories don't match
-  //       else {
-  //           marker.setVisible(false);
-  //       }
-  //     }
-  // };
+        // If is same category or category not picked
+        if (marker.category == category || category.length === 0) {
+            marker.setVisible(true);
+        }
+        // Categories don't match
+        else {
+            marker.setVisible(false);
+        }
+      }
+  };
 
 
 
@@ -360,13 +360,11 @@ var ViewModel = function() {
 
   this.currentLocation = ko.observable(this.locationList()[0]);
 
-  // this.currentLocation = ko.observableArray([]);
-
   this.categories = ["All", "Food", "Shopping", "Outdoor Activities"];
   this.selectedCategory = ko.observable(this.categories[0]);
 
-
   initMap();
+
 }
 
 

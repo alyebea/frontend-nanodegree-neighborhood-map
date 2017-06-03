@@ -2,29 +2,50 @@
     <html>
     <head>
         <meta charset="uft-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="neighborhood-map">
         <meta name="author" content="alye-carlevaro">
+
         <title>UDACITY NEIGHBORHOOD MAP PROJECT</title>
 
-        <style>
+        <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
           html,
           body {
             font-family: Arial, sans-serif;
             height: 100%;
             margin: 0;
-            padding: 0;
+          }
+          .header {
+            position: relative;
+            z-index: 2;
+            background-color: #454546;
+            padding-bottom: 10px;
+            padding-left: 20px;
+            padding-top: 10px;
+          }
+          .btn {
+            float: left;
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-top: 5px;
           }
           .container {
             height: 100%;
             position: relative;
-            display: flex;
+            width: auto;
           }
           h1 {
-            color: #525454;
+            color: #ABB1B4;
             font-size: 22px;
-            margin: 0 0 10px 0;
+            margin: 10px;
             text-align: left;
+          }
+          h2 {
+            color: white;
+            font-size: 15px;
           }
           hr {
             background: #D0D7D9;
@@ -32,92 +53,82 @@
             margin: 20px 0 20px 0;
             border: none;
           }
+          ul {
+            font-size: 16px;
+            color: #ABB1B4;
+            padding-top: 20px;
+          }
+          li {
+            margin-top: 10px;
+          }
+          li:hover {
+            color: #FCC900;
+            cursor: pointer;
+          }
+          #sidebar-wrapper {
+            z-index: 1;
+            left: 0;
+            width: 300px;
+            height: 100%;
+            padding-top: 30px;
+            padding-left: 10px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background: #454546;
+            -webkit-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+          }
           #map {
             bottom:0px;
             height: 100%;
-            left: 362px;
+            left: 0px;
             position: absolute;
             right: 0px;
           }
-          .options-box {
-            background: #fff;
-            border: 1px solid #999;
-            border-radius: 3px;
-            height: 100%;
-            line-height: 35px;
-            padding: 10px 10px 30px 10px;
-            text-align: left;
-            width: 340px;
-          }
-          .hamburger {
-            background: none;
-            position: relative;
-            float: right;
-            top: 0;
-            right: 0;
-            line-height: 45px;
-            padding: 5px 15px 0px 15px;
-            color: #999;
-            border: 0;
-            font-size: 1.4em;
-            font-weight: bold;
-            cursor: pointer;
-            outline: none;
-            z-index: 10000000000000;
-          }
-
-          .cross{
-            background: none;
-            position: absolute;
-            top: 0px;
-            right: 0;
-            padding: 7px 15px 0px 15px;
-            color: #999;
-            border: 0;
-            font-size: 3em;
-            line-height: 65px;
-            font-weight: bold;
-            cursor: pointer;
-            outline: none;
-            z-index: 10000000000000;
-            }
-
            @media only screen and (max-width: 480px) {
-            body { font-size: 12px;}
-            h1 { font-size: 14px;}
+            ul { font-size: 14px;}
             }
         </style>
     </head>
 
     <body>
-        <div class="container">
-            <div class="options-box">
-                <span>
-                    <h1>Hudson Valley Places</h1>
-                    <button class="hamburger">&#9776;</button>
-                    <button class="cross">&#735;</button>
-                </span>
-                <hr>
-                <div>
-                    <span class="text">Points of Interest</span>
-                </div>
-                <div>
-                    <select data-bind="options: categories, selectedOption: selectedCategory, value: selectedCategory">
-                    </select>
-                </div>
-                <div>
-                    <ul data-bind="foreach: locationList">
-                        <li data-bind="text: name, visible: $parent.selectedCategory() === category() || $root.selectedCategory() === 'All', click: $parent.selectLocation, visible: selectedCategory() === marker.category"></li>
-                    </ul>
-                </div>
+
+          <div class="header">
+            <div class="row">
+                <button class="btn" type="button" data-toggle="collapse" data-target="#sidebar-wrapper" aria-expanded="true" aria-controls="sidebar-wrapper">Menu</button>
+                <h1>HUDSON VALLEY PLACES</h1>
+              </div>
             </div>
+
+
+<!-- Sidebar -->
+      <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper">
+        <div id = "sidebar-wrapper" class="navbar-collapse collapse in" aria-expanded="true">
+            <h2>PLACES TO VISIT</h2>
+            <hr>
+            <div>
+                <select data-bind="options: categories, selectedOption: selectedCategory, value: selectedCategory">
+                </select>
+            </div>
+            <div>
+                <ul data-bind="foreach: locationList">
+                    <li class="locations" data-bind="text: name, visible: $parent.selectedCategory() === category() || $root.selectedCategory() === 'All', click: $parent.selectLocation"></li>
+                </ul>
+            </div>
+          </div>
+        </nav>
+
+
+        <div class="container">
             <div id="map"></div>
         </div>
 
-<!-- visible: $parent.selectedCategory() === category() || $root.selectedCategory() === 'All', visible: $parent.filterMarkers() === category(), -->
 
     <script src="bower_components/knockout/dist/knockout.js"></script>
-    <script src="js/jquery-3.2.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script src="js/app.js"></script>
 
 
@@ -125,4 +136,9 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKw5eY-nR_Z5EDjZYwOxCfH6A9s3YW_GM&v=3&callback=initApp" onerror="gmapsError()">
     </script>
 
-    </body>
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+
+</body>

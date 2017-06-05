@@ -175,7 +175,7 @@ var ViewModel = function() {
   var currentMarker;
 
   var venue = location.venue;
-  // var photos = [];
+  var photos = [];
 
 
   // Style the markers a bit. This will be our listing marker icon.
@@ -283,31 +283,12 @@ var ViewModel = function() {
   }
 
 
-/*
-Foursquare API
-*/
-  var foursquareUrl = "https://api.foursquare.com/v2/venues/4ada69c1f964a520632221e3/photos?&client_id=VGWNICIOTVQ1AKK3RTBCQDM3O5RUMQENR10VAD22EOOS0PMK&client_secret=TEJESOLSIYWA0FAPUKNK251LUOGKRAXB5TV2UYPSP12DK4PV&v=20170605"
-  var photos = [];
-  var photo;
-
-$.ajax({
-      url: foursquareUrl,
-      dataType: "jsonp",
-      success: function( response ) {
-        photos = response[1];
-        photo = ('<img class="venueimg" src="' + foursquareUrl + '">');
-        // clearTimeout(wikiRequestTimeout);
-      }
-
-    });
-
-  var foursquareRequestTimeout = setTimeout(function() {alert("Failed to load Foursquare photos");
-    }, 3000);
 
   /**
    *
    */
   function populateInfoWindow(marker, infowindow) {
+
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
       // Clear the infowindow content to give the streetview time to load.
@@ -318,9 +299,35 @@ $.ajax({
       });
     }
 
-    infowindow.open(map, marker);
-    infowindow.setContent('<div>' + marker.name + '</div>' + '<div>' + photo + '</div>');
-  }
+    /*
+    Foursquare API
+    */
+    var foursquareUrl = "https://api.foursquare.com/v2/venues/" + venue + "/photos?&client_id=VGWNICIOTVQ1AKK3RTBCQDM3O5RUMQENR10VAD22EOOS0PMK&client_secret=TEJESOLSIYWA0FAPUKNK251LUOGKRAXB5TV2UYPSP12DK4PV&v=20170602";
+    var photo = [];
+
+    function foursquarePhotos () {
+
+      $.ajax({
+          url: foursquareUrl,
+          dataType: "jsonp",
+
+          success: function( response ) {
+          var photos = response[1];
+          var photoUrl = 'prefix' + '300x500' + 'suffix';
+          photo = ('<img class="venueimg" src="' + photoUrl + '">');
+          },
+          async: true,
+
+        });
+            infowindow.setContent('<div>' + marker.name + '</div>' + '<div>' + photo + '</div>');
+            infowindow.open(map, marker);
+      }
+        var foursquareRequestTimeout = setTimeout(function() {alert("Failed to load Foursquare photos");
+        }, 3000);
+
+      foursquarePhotos();
+    }
+
 
 
   //Connects sidebar locations to markers on map

@@ -7,7 +7,8 @@ var locations = [
       name: 'Rockland Bakery',
       location: {lat: 41.100032, lng: -73.999976},
       value: 1,
-      category: 'Food'
+      category: 'Food',
+      venue: '4ada69c1f964a520632221e3'
     },
     {
       name: 'Patisserie Didier Dumas',
@@ -173,19 +174,22 @@ var ViewModel = function() {
   var markers = [];
   var currentMarker;
 
+  var venue = location.venue;
+  // var photos = [];
+
 
   // Style the markers a bit. This will be our listing marker icon.
   var defaultIcon = makeMarkerIcon('0091ff');
   // Create a "highlighted location" marker color for when the user
   // mouses over the marker.
-  var highlightedIcon = makeMarkerIcon('29E058');
+  var highlightedIcon = makeMarkerIcon('FCC900');
   /**
    *
    */
   function createMap() {
       map = new google.maps.Map(document.getElementById('map'), {
         center:{lat: 41.216742, lng: -73.967936},
-        zoom: 3,
+        zoom: 13,
         styles: styles,
         mapTypeControl: false
     });
@@ -229,6 +233,7 @@ var ViewModel = function() {
       var position = location.location;
       var name = location.name;
       var category = location.category;
+      var venue = location.venue;
 
       // Create a marker per location, and put into markers array.
       var marker = new google.maps.Marker({
@@ -277,19 +282,27 @@ var ViewModel = function() {
     largeInfowindow = new google.maps.InfoWindow();
   }
 
-  /**
-  Pulls in flickr content according to location
-  **/
-  function fourSquare() {
-      // Get the position from the location array.
-      var venue = (locations[i], i);
 
-      for (var i = 0; i < locations.length; i++) {
+/*
+Foursquare API
+*/
+  var foursquareUrl = "https://api.foursquare.com/v2/venues/4ada69c1f964a520632221e3/photos?&client_id=VGWNICIOTVQ1AKK3RTBCQDM3O5RUMQENR10VAD22EOOS0PMK&client_secret=TEJESOLSIYWA0FAPUKNK251LUOGKRAXB5TV2UYPSP12DK4PV&v=20170605"
+  var photos = [];
+  var photo;
 
-      var fourSquareVenue = "https://api.foursquare.com/v2/venues/" + location.venue + "/photos"
-    };
-    return fourSquareVenue;
-  }
+$.ajax({
+      url: foursquareUrl,
+      dataType: "jsonp",
+      success: function( response ) {
+        photos = response[1];
+        photo = ('<img class="venueimg" src="' + foursquareUrl + '">');
+        // clearTimeout(wikiRequestTimeout);
+      }
+
+    });
+
+  var foursquareRequestTimeout = setTimeout(function() {alert("Failed to load Foursquare photos");
+    }, 3000);
 
   /**
    *
@@ -306,7 +319,7 @@ var ViewModel = function() {
     }
 
     infowindow.open(map, marker);
-    infowindow.setContent('<div>' + marker.name + '</div>');
+    infowindow.setContent('<div>' + marker.name + '</div>' + '<div>' + photo + '</div>');
   }
 
 
@@ -326,19 +339,26 @@ var ViewModel = function() {
   };
 
 
-  var filterMarkers = function(category) {
-    for (i = 0; i < markers.length; i++) {
+  // this.filterMarkers = function() {
+  //   var filterCategories = this.selectedCategory;
 
-        // If is same category or category not picked
-        if (marker.category == category || category.length === 0) {
-            marker.setVisible(true);
-        }
-        // Categories don't match
-        else {
-            marker.setVisible(false);
-        }
-      }
-  };
+  //   visibleMarkers.removeAll();
+
+
+
+    // for (i = 0; i < markers.length; i++) {
+
+    //     // If is same category or category not picked
+    //     if (marker.category == category || category.length === 0) {
+    //         marker.setVisible(true);
+    //     }
+    //     // Categories don't match
+    //     else {
+    //         marker.setVisible(false);
+    //     }
+    //   }
+  // };
+
 
 
 
@@ -362,6 +382,7 @@ var ViewModel = function() {
 
   this.categories = ["All", "Food", "Shopping", "Outdoor Activities"];
   this.selectedCategory = ko.observable(this.categories[0]);
+  this.visibleMarkers = ko.observableArray();
 
   initMap();
 

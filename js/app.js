@@ -325,11 +325,11 @@ var ViewModel = function() {
           dataType: "jsonp",
 
           success: function( response ) {
-
-          photo_data = response.photos.items[0];
-          var photoUrl = photo_data.prefix + photo_data.width + 'x' + photo_data.height + photo_data.suffix;
-          photo = ('<img class="venueimg" src="' + photoUrl + '">');
           console.log(response);
+          var photo_data = response.response.photos.items[0] || response.photos.items[0];
+          var photoUrl = photo_data.prefix + photo_data.width + 'x' + photo_data.height + photo_data.suffix;
+          var photo = ('<img class="venueimg" src="' + photoUrl + '">');
+          console.log(response.response);
           },
           async: true,
 
@@ -364,20 +364,31 @@ var ViewModel = function() {
   };
 
 
-  this.filterMarkers = function(categories, i) {
+  // this.filterMarkers = ko.computed(function(markers, categories) {
 
-    for (i = 0; i < markers.length; i++) {
+  //     var filter = this.filter();
+  //     if (!filter) {
+  //       return this.markers();
+  //     } else {
+  //         return ko.utils.arrayFilter(this.markers(), function(marker) {
+  //           return marker.category === selected;
+  //         });
+  //     }
+  //   });
 
-        // If is same category or category not picked
-        if (location.category == category || category.length === 0) {
-            marker.setVisible(true);
-        }
-        // Categories don't match
-        else {
-            marker.setVisible(false);
-        }
-      }
-    };
+
+    // for (i = 0; i < markers.length; i++) {
+
+    //     // If is same category or category not picked
+    //     if (location.category == category || category.length === 0) {
+    //         marker.setVisible(true);
+    //     }
+    //     // Categories don't match
+    //     else {
+    //         marker.setVisible(false);
+    //     }
+    //   }
+    // };
 
 
 

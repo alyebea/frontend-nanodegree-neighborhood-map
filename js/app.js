@@ -253,6 +253,7 @@ var ViewModel = function() {
         name: name,
         animation: google.maps.Animation.DROP,
         icon: defaultIcon,
+        venue: venue,
         id: i
       });
       // Create an onclick event to open the large infowindow at each marker.
@@ -314,7 +315,7 @@ var ViewModel = function() {
     /*
     Foursquare API
     */
-    var foursquareUrl = "https://api.foursquare.com/v2/venues/" + venue + "/photos?&client_id=VGWNICIOTVQ1AKK3RTBCQDM3O5RUMQENR10VAD22EOOS0PMK&client_secret=TEJESOLSIYWA0FAPUKNK251LUOGKRAXB5TV2UYPSP12DK4PV&v=20170602";
+    var foursquareUrl = "https://api.foursquare.com/v2/venues/" + marker.venue + "/photos?&client_id=VGWNICIOTVQ1AKK3RTBCQDM3O5RUMQENR10VAD22EOOS0PMK&client_secret=TEJESOLSIYWA0FAPUKNK251LUOGKRAXB5TV2UYPSP12DK4PV&v=20170602&m=foursquare";
     var photo = [];
 
     function foursquarePhotos () {
@@ -324,18 +325,23 @@ var ViewModel = function() {
           dataType: "jsonp",
 
           success: function( response ) {
-          var photos = response[1];
-          var photoUrl = 'prefix' + '300x500' + 'suffix';
+
+          photo_data = response.photos.items[0];
+          var photoUrl = photo_data.prefix + photo_data.width + 'x' + photo_data.height + photo_data.suffix;
           photo = ('<img class="venueimg" src="' + photoUrl + '">');
+          console.log(response);
           },
           async: true,
 
         });
-            infowindow.setContent('<div>' + marker.name + '</div>' + '<div>' + photo + '</div>');
-            infowindow.open(map, marker);
+
+          infowindow.setContent('<div>' + marker.name + '</div>' + '<div>' + photo + '</div>');
+          infowindow.open(map, marker);
       }
         var foursquareRequestTimeout = setTimeout(function() {alert("Failed to load Foursquare photos");
         }, 3000);
+
+        clearTimeout(foursquareRequestTimeout);
 
       foursquarePhotos();
     }

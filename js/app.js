@@ -393,7 +393,7 @@ Filter Markers by Category
   this.selectedCategory = ko.observable(this.categories[0]);
 
   this.selectedLocation = ko.observableArray(locations);
-
+  self.selectedLocation()[i].marker = marker;
   this.filteredItems = ko.computed(function () {
 
         for (var i = 0; i < self.selectedLocation().length; i++) {

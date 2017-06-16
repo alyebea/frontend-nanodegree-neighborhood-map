@@ -112,7 +112,9 @@ var locations = [
 
 
 
-/** Styles the map **/
+/*
+Styles the map
+*/
 var styles = [
     {
       elementType: 'geometry',
@@ -190,7 +192,9 @@ var styles = [
 
 
 
-//View model
+/*
+View model
+*/
 var ViewModel = function() {
   var self = this;
 
@@ -201,15 +205,13 @@ var ViewModel = function() {
 
   var venue = location.venue;
 
-
-
-  // Style the markers a bit. This will be our listing marker icon.
+  // Style the markers
   var defaultIcon = makeMarkerIcon('0091ff');
-  // Create a "highlighted location" marker color for when the user
-  // mouses over the marker.
+  // Create a "highlighted location" marker color
   var highlightedIcon = makeMarkerIcon('FCC900');
-  /**
-   *
+
+  /*
+  Create google map
    */
   function createMap() {
       map = new google.maps.Map(document.getElementById('map'), {
@@ -221,7 +223,7 @@ var ViewModel = function() {
   }
 
   /**
-   *
+   Create bounds of map
    */
   function showPlaces() {
       var bounds = new google.maps.LatLngBounds();
@@ -234,7 +236,7 @@ var ViewModel = function() {
   };
 
   /**
-   *
+   Initializes map
    */
   function initMap() {
     createMap();
@@ -244,6 +246,7 @@ var ViewModel = function() {
     for (var i = 0; i < locations.length; i++) {
       // Get the position from the location array.
       var marker = createMarker(locations[i], i);
+
       // Push the marker to our array of markers.
       markers.push(marker);
     };
@@ -391,26 +394,28 @@ Filter Markers by Category
 
   this.categories = ["All", "Food", "Shopping", "Outdoor Activities"];
   this.selectedCategory = ko.observable(this.categories[0]);
-
   this.selectedLocation = ko.observableArray(locations);
-  self.selectedLocation()[i].marker = marker;
+
   this.filteredItems = ko.computed(function () {
 
         for (var i = 0; i < self.selectedLocation().length; i++) {
 
-          if (self.selectedLocation()[i].marker) {
-
             if (self.selectedCategory() === "All" || !self.selectedCategory()) {
                 self.selectedLocation()[i].show(true);
-                self.selectedLocation()[i].marker.setVisible(true);
+                  if (self.selectedLocation()[i].marker) {
+                  self.selectedLocation()[i].marker.setVisible(true);
+                  }
             } else if (self.selectedCategory() === self.selectedLocation()[i].category) {
                 self.selectedLocation()[i].show(true);
-                self.selectedLocation()[i].marker.setVisible(true);
+                  if (self.selectedLocation()[i].marker) {
+                  self.selectedLocation()[i].marker.setVisible(true);
+                  }
             } else {
                 self.selectedLocation()[i].show(false);
-                self.selectedLocation()[i].marker.setVisible(false);
+                  if (self.selectedLocation()[i].marker) {
+                  self.selectedLocation()[i].marker.setVisible(false);
+                  }
             }
-          }
         }
     });
 

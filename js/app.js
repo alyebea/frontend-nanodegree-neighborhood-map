@@ -275,7 +275,7 @@ var ViewModel = function() {
         populateInfoWindow(this, largeInfowindow);
 
       });
-      //Attached marker to locations
+      //Attach marker to locations
       locations[i].marker = marker;
       // Two event listeners - one for mouseover, one for mouseout,
       // to change the colors back and forth.
@@ -397,9 +397,12 @@ Filter Markers by Category
   this.filteredItems = ko.computed(function () {
 
         for (var i = 0; i < self.selectedLocation().length; i++) {
+
+          if (self.selectedLocation()[i].marker) {
+
             if (self.selectedCategory() === "All" || !self.selectedCategory()) {
                 self.selectedLocation()[i].show(true);
-                self.selectedLocation()[i].markers.setVisible(true);
+                self.selectedLocation()[i].marker.setVisible(true);
             } else if (self.selectedCategory() === self.selectedLocation()[i].category) {
                 self.selectedLocation()[i].show(true);
                 self.selectedLocation()[i].marker.setVisible(true);
@@ -407,6 +410,7 @@ Filter Markers by Category
                 self.selectedLocation()[i].show(false);
                 self.selectedLocation()[i].marker.setVisible(false);
             }
+          }
         }
     });
 

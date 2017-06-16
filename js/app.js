@@ -275,6 +275,8 @@ var ViewModel = function() {
         populateInfoWindow(this, largeInfowindow);
 
       });
+      //Attached marker to locations
+      locations[i].marker = marker;
       // Two event listeners - one for mouseover, one for mouseout,
       // to change the colors back and forth.
       marker.addListener('mouseover', function() {
@@ -386,44 +388,27 @@ var ViewModel = function() {
 /*
 Filter Markers by Category
 */
-self.selectLocation = ko.observableArray(locations);
-self.selectedCategory = ko.observable('');
-self.locations = ko.observableArray([]);
-var marker;
- self.filteredItems = ko.computed(function () {
-        for (var i = 0; i < self.selectLocation().length; i++) {
+
+  this.categories = ["All", "Food", "Shopping", "Outdoor Activities"];
+  this.selectedCategory = ko.observable(this.categories[0]);
+
+  this.selectedLocation = ko.observableArray(locations);
+
+  this.filteredItems = ko.computed(function () {
+
+        for (var i = 0; i < self.selectedLocation().length; i++) {
             if (self.selectedCategory() === "All" || !self.selectedCategory()) {
-                self.selectLocation()[i].show(true);
-                self.selectLocation()[i].marker.setVisible(true);
-            } else if (self.selectedCategory() === self.selectLocation()[i].category) {
-                self.selectLocation()[i].show(true);
-                self.selectLocation()[i].marker.setVisible(true);
+                self.selectedLocation()[i].show(true);
+                self.selectedLocation()[i].markers.setVisible(true);
+            } else if (self.selectedCategory() === self.selectedLocation()[i].category) {
+                self.selectedLocation()[i].show(true);
+                self.selectedLocation()[i].marker.setVisible(true);
             } else {
-                self.selectLocation()[i].show(false);
-                self.selectLocation()[i].marker.setVisible(false);
+                self.selectedLocation()[i].show(false);
+                self.selectedLocation()[i].marker.setVisible(false);
             }
         }
     });
-
-  // this.filteredItems = ko.computed(function () {
-  //   var filter = this.filter().toLowerCase();
-
-  //   if (!filterMarkers) {
-  //     return ko.utils.arrayFilter(this.location(), function(locationsItem) {
-  //     item.marker.setVisible(true);
-  //       return true;
-  //     });
-  //   }
-
-  //     return ko.utils.arrayFilter(this.location(), function(locationsItem) {
-  //       if (item.name.toLowerCase().indexOf(filter) === 0) {
-  //       return true
-  //     } else {
-  //       item.marker.setVisible(false);
-  //       return false
-  //     };
-  //   })
-  // });
 
 
 
@@ -445,10 +430,6 @@ var marker;
 
   this.currentLocation = ko.observable(this.locationList()[0]);
 
-  this.categories = ["All", "Food", "Shopping", "Outdoor Activities"];
-  this.selectedCategory = ko.observable(this.categories[0]);
-  this.filter = ko.observable()
-  this.markers = ko.observableArray([]);
 
   initMap();
 

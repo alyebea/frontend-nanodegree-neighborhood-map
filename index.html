@@ -116,7 +116,7 @@
             <h2>PLACES TO VISIT</h2>
             <hr>
             <div>
-                <p>Sort by Category: <select data-bind="options: categories, selectedOption: selectedCategory, value: selectedCategory">
+                <p>Sort by Category: <select data-bind="options: categories, selectedOption: selectedCategory || filteredItems, value: selectedCategory">
                 </select></p>
             </div>
             <div>

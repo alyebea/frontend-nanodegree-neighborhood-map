@@ -8,91 +8,104 @@ var locations = [
       location: {lat: 41.100032, lng: -73.999976},
       value: 1,
       category: 'Food',
-      venue: '4ada69c1f964a520632221e3'
+      venue: '4ada69c1f964a520632221e3',
+      show: ko.observable(true)
     },
     {
       name: 'Didier Dumas',
       location: {lat: 41.091596, lng: -73.922681},
       value: 2,
       category: 'Food',
-      venue: '4b072388f964a52004f822e3'
+      venue: '4b072388f964a52004f822e3',
+      show: ko.observable(true)
     },
     {
       name: 'Posa Posa',
       location: {lat: 41.091472, lng: -74.003912},
       value: 3,
       category: 'Food',
-      venue: '4b534ec3f964a520989627e3'
+      venue: '4b534ec3f964a520989627e3',
+      show: ko.observable(true)
     },
     {
       name: 'Peekskill Brewery',
       location: {lat: 41.286954, lng: -73.928955},
       value: 4,
       category: 'Food',
-      venue: '4a75d77bf964a52067e11fe3'
+      venue: '4a75d77bf964a52067e11fe3',
+      show: ko.observable(true)
     },
     {
       name: 'Jean-Jaques',
       location: {lat: 41.132992, lng: -73.792726},
       value: 5,
       category: 'Food',
-      venue: '4b65c2a6f964a520fdfd2ae3'
+      venue: '4b65c2a6f964a520fdfd2ae3',
+      show: ko.observable(true)
     },
     {
       name: 'Le Bouchon',
       location: {lat: 41.417913, lng: -73.958186},
       value: 6,
       category: 'Food',
-      venue: '4a3482d9f964a520589c1fe3'
+      venue: '4a3482d9f964a520589c1fe3',
+      show: ko.observable(true)
     },
     {
       name: 'Palisades Center Mall',
       location: {lat: 41.098037, lng: -73.956764},
       value: 7,
       category: 'Shopping',
-      venue: '49bca48cf964a52043541fe3'
+      venue: '49bca48cf964a52043541fe3',
+      show: ko.observable(true)
     },
     {
       name: 'The Shops at Nanuet',
       location: {lat: 41.095844, lng: -74.015929},
       value: 8,
       category: 'Shopping',
-      venue: '5256d18a11d27f925b64df56'
+      venue: '5256d18a11d27f925b64df56',
+      show: ko.observable(true)
     },
     {
       name: 'The Westchester',
       location: {lat: 41.031515, lng: -73.758551},
       value: 9,
       category: 'Shopping',
-      venue: '4a510bd1f964a5207eb01fe3'
+      venue: '4a510bd1f964a5207eb01fe3',
+      show: ko.observable(true)
     },
     {
       name: 'Memorial Park',
       location: {lat: 41.090476, lng: -73.919462},
       value: 10,
       category: 'Outdoor Activities',
-      venue: '4b633e38f964a5200b6d2ae3'
+      venue: '4b633e38f964a5200b6d2ae3',
+      show: ko.observable(true)
     },
     {
       name: 'Bear Mountain State Park',
       location: {lat: 41.311888, lng: -73.988696},
       value: 11,
       category: 'Outdoor Activities',
-      venue: '4a07ad4af964a52090731fe3'
+      venue: '4a07ad4af964a52090731fe3',
+      show: ko.observable(true)
     },
     {
       name: 'The Haverstraw Marina',
       location: {lat: 41.216742, lng: -73.967936},
       value: 12,
       category: 'Outdoor Activities',
-      venue: '4bf73db7508c0f47aa6b3d31'
+      venue: '4bf73db7508c0f47aa6b3d31',
+      show: ko.observable(true)
     },
     {
       name: 'Rockland Lake State Park',
       location: {lat: 41.164732, lng: -73.931705},
       value: 13,
       category: 'Outdoor Activities',
-      venue: '4a9abc3cf964a5206a3220e3'
+      venue: '4a9abc3cf964a5206a3220e3',
+      show: ko.observable(true)
     }
   ];
 
@@ -187,7 +200,7 @@ var ViewModel = function() {
   var currentMarker;
 
   var venue = location.venue;
-  var photos = [];
+
 
 
   // Style the markers a bit. This will be our listing marker icon.
@@ -200,11 +213,11 @@ var ViewModel = function() {
    */
   function createMap() {
       map = new google.maps.Map(document.getElementById('map'), {
-        center:{lat: 41.216742, lng: -76.967936},
-        zoom: 13,
+        center: {lat: 41.216742, lng: -76.967936},
+        zoom: 10,
         styles: styles,
         mapTypeControl: false
-    })
+    });
   }
 
   /**
@@ -271,6 +284,14 @@ var ViewModel = function() {
         this.setIcon(defaultIcon);
       });
 
+
+  google.maps.event.addListener(marker, 'visible_changed', function(){
+    console.log('visible_changed triggered');
+  });
+
+  marker.setVisible(false);
+  marker.setVisible(true);
+
       return marker;
   }
 
@@ -295,8 +316,6 @@ var ViewModel = function() {
     largeInfowindow = new google.maps.InfoWindow();
   }
 
-
-
   /**
    *
    */
@@ -316,7 +335,7 @@ var ViewModel = function() {
     Foursquare API
     */
     var foursquareUrl = "https://api.foursquare.com/v2/venues/" + marker.venue + "/photos?&client_id=VGWNICIOTVQ1AKK3RTBCQDM3O5RUMQENR10VAD22EOOS0PMK&client_secret=TEJESOLSIYWA0FAPUKNK251LUOGKRAXB5TV2UYPSP12DK4PV&v=20170602&m=foursquare";
-    var photo = [];
+
 
     function foursquarePhotos () {
 
@@ -327,21 +346,21 @@ var ViewModel = function() {
           success: function( response ) {
           console.log(response);
           var photo_data = response.response.photos.items[0] || response.photos.items[0];
-          var photoUrl = photo_data.prefix + photo_data.width + 'x' + photo_data.height + photo_data.suffix;
+          var photoUrl = photo_data.prefix + '200' + 'x' + '200' + photo_data.suffix;
           var photo = ('<img class="venueimg" src="' + photoUrl + '">');
           console.log(response.response);
+          infowindow.setContent('<div>' + marker.name + '</div>' + '<div>' + photo + '</div>');
+          infowindow.open(map, marker);
           },
           async: true,
 
         });
 
-          infowindow.setContent('<div>' + marker.name + '</div>' + '<div>' + photo + '</div>');
-          infowindow.open(map, marker);
-      }
         var foursquareRequestTimeout = setTimeout(function() {alert("Failed to load Foursquare photos");
         }, 3000);
 
         clearTimeout(foursquareRequestTimeout);
+      }
 
       foursquarePhotos();
     }
@@ -364,33 +383,47 @@ var ViewModel = function() {
   };
 
 
-  // this.filterMarkers = ko.computed(function(markers, categories) {
+/*
+Filter Markers by Category
+*/
+self.selectLocation = ko.observableArray(locations);
+self.selectedCategory = ko.observable('');
+self.locations = ko.observableArray([]);
+var marker;
+ self.filteredItems = ko.computed(function () {
+        for (var i = 0; i < self.selectLocation().length; i++) {
+            if (self.selectedCategory() === "All" || !self.selectedCategory()) {
+                self.selectLocation()[i].show(true);
+                self.selectLocation()[i].marker.setVisible(true);
+            } else if (self.selectedCategory() === self.selectLocation()[i].category) {
+                self.selectLocation()[i].show(true);
+                self.selectLocation()[i].marker.setVisible(true);
+            } else {
+                self.selectLocation()[i].show(false);
+                self.selectLocation()[i].marker.setVisible(false);
+            }
+        }
+    });
 
-  //     var filter = this.filter();
-  //     if (!filter) {
-  //       return this.markers();
+  // this.filteredItems = ko.computed(function () {
+  //   var filter = this.filter().toLowerCase();
+
+  //   if (!filterMarkers) {
+  //     return ko.utils.arrayFilter(this.location(), function(locationsItem) {
+  //     item.marker.setVisible(true);
+  //       return true;
+  //     });
+  //   }
+
+  //     return ko.utils.arrayFilter(this.location(), function(locationsItem) {
+  //       if (item.name.toLowerCase().indexOf(filter) === 0) {
+  //       return true
   //     } else {
-  //         return ko.utils.arrayFilter(this.markers(), function(marker) {
-  //           return marker.category === selected;
-  //         });
-  //     }
-  //   });
-
-
-    // for (i = 0; i < markers.length; i++) {
-
-    //     // If is same category or category not picked
-    //     if (location.category == category || category.length === 0) {
-    //         marker.setVisible(true);
-    //     }
-    //     // Categories don't match
-    //     else {
-    //         marker.setVisible(false);
-    //     }
-    //   }
-    // };
-
-
+  //       item.marker.setVisible(false);
+  //       return false
+  //     };
+  //   })
+  // });
 
 
 
@@ -414,7 +447,8 @@ var ViewModel = function() {
 
   this.categories = ["All", "Food", "Shopping", "Outdoor Activities"];
   this.selectedCategory = ko.observable(this.categories[0]);
-  this.visibleMarkers = ko.observableArray();
+  this.filter = ko.observable()
+  this.markers = ko.observableArray([]);
 
   initMap();
 

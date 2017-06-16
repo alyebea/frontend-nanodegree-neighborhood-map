@@ -37,6 +37,9 @@
             position: relative;
             width: auto;
           }
+          .venueimg {
+            width: 100%;
+          }
           h1 {
             color: #ABB1B4;
             font-size: 22px;
@@ -46,6 +49,9 @@
           h2 {
             color: white;
             font-size: 15px;
+          }
+          p {
+            color: gray;
           }
           hr {
             background: #D0D7D9;
@@ -110,8 +116,8 @@
             <h2>PLACES TO VISIT</h2>
             <hr>
             <div>
-                <select data-bind="options: categories, selectedOption: selectedCategory, filterMarkers, value: selectedCategory, filterMarkers">
-                </select>
+                <p>Sort by Category: <select data-bind="options: categories, selectedOption: selectedCategory, value: selectedCategory">
+                </select></p>
             </div>
             <div>
                 <ul data-bind="foreach: locationList">

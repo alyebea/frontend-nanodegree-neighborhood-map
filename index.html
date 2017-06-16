@@ -94,8 +94,7 @@
             right: 0px;
           }
            @media only screen and (max-width: 480px) {
-            h1 { font-size: 14px; }
-            ul { font-size: 12px;}
+            .header {padding-bottom: 5px;}
             }
         </style>
     </head>
@@ -116,7 +115,7 @@
             <h2>PLACES TO VISIT</h2>
             <hr>
             <div>
-                <p>Sort by Category: <select data-bind="options: categories, selectedOption: selectedCategory || filteredItems, value: selectedCategory">
+                <p>Sort by Category: <select data-bind="options: categories, selectedOption: selectedCategory, value: selectedCategory">
                 </select></p>
             </div>
             <div>

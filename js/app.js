@@ -150,9 +150,6 @@ var locations = [{
     }
 ];
 
-
-
-
 /*
 Styles the map
 */
@@ -259,8 +256,6 @@ var styles = [{
         }]
     }
 ];
-
-
 
 
 /*
@@ -441,8 +436,6 @@ var ViewModel = function() {
         foursquarePhotos();
     }
 
-
-
     /*
     Connects sidebar locations to markers on map
     */
@@ -459,7 +452,6 @@ var ViewModel = function() {
 
         marker.setIcon(highlightedIcon);
     };
-
 
     /*
     Filter Markers by Category
@@ -491,8 +483,6 @@ var ViewModel = function() {
             }
         }
     });
-
-
 
     /*
     Location data

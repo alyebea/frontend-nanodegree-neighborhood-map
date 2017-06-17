@@ -1,9 +1,12 @@
 /*
+Front-End Nanodegree project by Alye Carlevaro
+*/
+
+/*
 Model
 */
 var ko;
 var google;
-var $;
 
 var locations = [{
         name: 'Rockland Bakery',

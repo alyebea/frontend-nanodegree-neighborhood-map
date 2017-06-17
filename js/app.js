@@ -1,9 +1,10 @@
-
-"use strict";
-
 /*
 Model
 */
+var ko;
+var google;
+var $;
+
 var locations = [{
         name: 'Rockland Bakery',
         location: {
@@ -266,14 +267,13 @@ var styles = [{
 View model
 */
 var ViewModel = function() {
+    'use strict';
     var self = this;
 
     var map;
     var largeInfowindow;
     var markers = [];
     var currentMarker;
-
-    var venue = location.venue;
 
     // Style the markers
     var defaultIcon = makeMarkerIcon('0091ff');
@@ -306,7 +306,7 @@ var ViewModel = function() {
             bounds.extend(markers[i].position);
         }
         map.fitBounds(bounds);
-    };
+    }
 
     /*
      Initializes map
@@ -322,7 +322,7 @@ var ViewModel = function() {
 
             // Push the marker to our array of markers.
             markers.push(marker);
-        };
+        }
 
         showPlaces();
     }
@@ -333,7 +333,6 @@ var ViewModel = function() {
     function createMarker(location, i) {
         var position = location.location;
         var name = location.name;
-        var category = location.category;
         var venue = location.venue;
 
         // Create a marker per location, and put into markers array.
@@ -398,7 +397,6 @@ var ViewModel = function() {
      Populates info window with Foursquare API
      */
     function populateInfoWindow(marker, infowindow) {
-
         // Check to make sure the infowindow is not already opened on this marker.
         if (infowindow.marker != marker) {
             // Clear the infowindow content to give the streetview time to load.
@@ -416,7 +414,6 @@ var ViewModel = function() {
 
 
         function foursquarePhotos() {
-
             $.ajax({
                 url: foursquareUrl,
                 dataType: "jsonp",
@@ -472,7 +469,6 @@ var ViewModel = function() {
     this.selectedLocation = ko.observableArray(locations);
 
     this.filteredItems = ko.computed(function() {
-
         for (var i = 0; i < self.selectedLocation().length; i++) {
             //show all markers if All is selected
             if (self.selectedCategory() === "All" || !self.selectedCategory()) {
@@ -505,7 +501,7 @@ var ViewModel = function() {
         this.name = ko.observable(data.name);
         this.markerIndex = data.value;
         this.category = ko.observable(data.category);
-    }
+    };
 
 
     /*
@@ -522,10 +518,12 @@ var ViewModel = function() {
 
     initMap();
 
-}
-
+};
 
 
 function initApp() {
+    'use strict';
     ko.applyBindings(new ViewModel());
 }
+
+initApp();

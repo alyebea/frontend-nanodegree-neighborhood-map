@@ -365,12 +365,14 @@ var ViewModel = function() {
             this.setIcon(defaultIcon);
         });
 
-        //Animate marker when clicked.
+        //Animate marker when clicked
         marker.addListener('click', function() {
-          if (marker.getAnimation() !== null) {
-          marker.setAnimation(null);
-        } else {
-          marker.setAnimation(google.maps.Animation.BOUNCE);
+          if(marker.getAnimation() == null) {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function(){ marker.setAnimation(null); }, 1400);  // stop after 2 bounces
+          }
+          else {
+            marker.setAnimation(google.maps.Animation.NULL);
           }
         });
 

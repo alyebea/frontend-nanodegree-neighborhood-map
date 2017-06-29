@@ -41,24 +41,20 @@
         </nav>
 
 
-        <div class="container">
+        <main>
             <div id="map"></div>
-        </div>
+        </main>
 
 
-    <script src="bower_components/knockout/dist/knockout.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    <script src="js/app.js"></script>
+        <script src="knockout/dist/knockout.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+        <script src="js/app.js"></script>
 
 
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKw5eY-nR_Z5EDjZYwOxCfH6A9s3YW_GM&v=3&callback=initApp" onerror="gmapsError()">
-    </script>
+        <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKw5eY-nR_Z5EDjZYwOxCfH6A9s3YW_GM&v=3&callback=initApp" onerror="mapError()">
+        </script>
 
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
 
-</body>
+    </body>

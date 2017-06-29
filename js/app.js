@@ -367,7 +367,7 @@ var ViewModel = function() {
 
         //Animate marker when clicked
         marker.addListener('click', function() {
-          if(marker.getAnimation() == null) {
+          if(marker.getAnimation() === null) {
             marker.setAnimation(google.maps.Animation.BOUNCE);
             setTimeout(function(){ marker.setAnimation(null); }, 1400);  // stop after 2 bounces
           }

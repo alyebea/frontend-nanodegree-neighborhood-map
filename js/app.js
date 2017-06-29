@@ -293,6 +293,7 @@ var ViewModel = function() {
         });
     }
 
+
     /*
      Create bounds of map
      */
@@ -303,6 +304,11 @@ var ViewModel = function() {
             markers[i].setMap(map);
             bounds.extend(markers[i].position);
         }
+
+        google.maps.event.addDomListener(window, 'resize', function() {
+        map.fitBounds(bounds); // `bounds` is a `LatLngBounds` object
+        });
+
         map.fitBounds(bounds);
     }
 
@@ -359,6 +365,14 @@ var ViewModel = function() {
             this.setIcon(defaultIcon);
         });
 
+        //Animate marker when clicked.
+        marker.addListener('click', function() {
+          if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+          }
+        });
 
         google.maps.event.addListener(marker, 'visible_changed', function() {
             console.log('visible_changed triggered');
@@ -385,7 +399,7 @@ var ViewModel = function() {
     }
 
     /*
-     Established info window
+     Establish info window
      */
     function createInfoWindow() {
         largeInfowindow = new google.maps.InfoWindow();
@@ -402,6 +416,7 @@ var ViewModel = function() {
             // Make sure the marker property is cleared if the infowindow is closed.
             infowindow.addListener('closeclick', function() {
                 infowindow.marker = null;
+                marker.setAnimation(null);
             });
         }
 
@@ -409,35 +424,30 @@ var ViewModel = function() {
         Foursquare API
         */
         var foursquareUrl = "https://api.foursquare.com/v2/venues/" + marker.venue + "/photos?&client_id=VGWNICIOTVQ1AKK3RTBCQDM3O5RUMQENR10VAD22EOOS0PMK&client_secret=TEJESOLSIYWA0FAPUKNK251LUOGKRAXB5TV2UYPSP12DK4PV&v=20170602&m=foursquare";
+        var foursquareRequestTimeout = setTimeout(function() {
+          alert("Failed to load Foursquare photo.");
+        }, 2000);
 
+          $.ajax({
+              url: foursquareUrl,
+              dataType: "jsonp",
 
-        function foursquarePhotos() {
-            $.ajax({
-                url: foursquareUrl,
-                dataType: "jsonp",
+              success: function(response) {
+                  console.log(response);
+                  var photo_data = response.response.photos.items[0] || response.photos.items[0];
+                  var photoUrl = photo_data.prefix + '200' + 'x' + '200' + photo_data.suffix;
+                  var photo = ('<img class="venueimg" src="' + photoUrl + '">');
+                  console.log(response.response);
+                  infowindow.setContent('<div>' + marker.name + '</div>' + '<div>' + photo + '</div>');
+                  infowindow.open(map, marker);
 
-                success: function(response) {
-                    console.log(response);
-                    var photo_data = response.response.photos.items[0] || response.photos.items[0];
-                    var photoUrl = photo_data.prefix + '200' + 'x' + '200' + photo_data.suffix;
-                    var photo = ('<img class="venueimg" src="' + photoUrl + '">');
-                    console.log(response.response);
-                    infowindow.setContent('<div>' + marker.name + '</div>' + '<div>' + photo + '</div>');
-                    infowindow.open(map, marker);
-                },
-                async: true,
+                  clearTimeout(foursquareRequestTimeout);
+                }
 
-            });
+              });
 
-            var foursquareRequestTimeout = setTimeout(function() {
-                alert("Failed to load Foursquare photos");
-            }, 3000);
-
-            clearTimeout(foursquareRequestTimeout);
         }
 
-        foursquarePhotos();
-    }
 
     /*
     Connects sidebar locations to markers on map
@@ -491,7 +501,7 @@ var ViewModel = function() {
     Location data
     */
     var Location = function(data) {
-        this.name = ko.observable(data.name);
+        this.name = data.name;
         this.markerIndex = data.value;
         this.category = ko.observable(data.category);
     };
@@ -512,6 +522,14 @@ var ViewModel = function() {
     initMap();
 
 };
+
+/*
+Loads error message if map fails
+*/
+function mapError() {
+    alert("Map could not be loaded, please try again.");
+    console.log('error');
+}
 
 
 function initApp() {

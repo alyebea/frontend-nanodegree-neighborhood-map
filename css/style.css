@@ -5,6 +5,7 @@
     height: 100%;
     margin: 0;
   }
+
   .header {
     position: relative;
     z-index: 2000;
@@ -13,51 +14,62 @@
     padding-left: 20px;
     padding-top: 10px;
   }
+
   .btn {
     float: left;
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 5px;
   }
+
   .container {
     height: 100%;
     position: relative;
     width: auto;
   }
+
   .venueimg {
     width: 100%;
   }
+
   h1 {
     color: #ABB1B4;
     font-size: 22px;
     margin: 10px;
     text-align: left;
   }
+
   h2 {
     color: white;
     font-size: 15px;
   }
+
   p {
     color: gray;
   }
+
   hr {
     background: #D0D7D9;
     height: 1px;
     margin: 20px 0 20px 0;
     border: none;
   }
+
   ul {
     font-size: 16px;
     color: #ABB1B4;
     padding-top: 20px;
   }
+
   li {
     margin-top: 10px;
   }
+
   li:hover {
     color: #FCC900;
     cursor: pointer;
   }
+
   #sidebar-wrapper {
     z-index: 1000;
     width: 300px;
@@ -72,6 +84,7 @@
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;s
   }
+
   #map {
     bottom:0px;
     height: 100%;
@@ -79,9 +92,10 @@
     position: absolute;
     right: 0px;
   }
-   @media only screen and (max-width: 480px) {
+
+  @media only screen and (max-width: 480px) {
     h1 { font-size: 16px; }
     ul { font-size: 14px;}
     .btn { color: gray; }
     .header {padding-bottom: 5px;}
-    }
+  }

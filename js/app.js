@@ -538,5 +538,3 @@ function initApp() {
     'use strict';
     ko.applyBindings(new ViewModel());
 }
-
-initApp();
